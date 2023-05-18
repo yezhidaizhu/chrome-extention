@@ -1,0 +1,121 @@
+#chrome-extension-zfy-search-content-view-root {
+  --color-primer-canvas-backdrop: rgba(15, 23, 42, 0.8);
+
+  // 搜索模块底色(暗色)
+  // --box-bg-color: #1e293b;
+  // --search-input-color: rgb(226, 232, 240);
+
+
+  --search-input-color: rgb(18, 18, 18);
+  --box-bg-color: #fff;
+
+  // 默认值
+  text-align: left;
+  font-size: 16px;
+  
+  div {
+    box-sizing: border-box;
+  }
+
+  #backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    height: 100vh;
+    padding: 8px;
+
+    // backdrop-filter: blur(4px);
+    // background-color: var(--color-primer-canvas-backdrop);
+  }
+
+  #hidden {
+    display: none;
+  }
+
+  .searchBox {
+    padding: 10vh;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    .searchBoxContent {
+      max-width: 758px;
+
+      margin: auto;
+      overflow: hidden;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .searchInput {
+      display: block;
+      width: 100%;
+      padding: 0 20px;
+      margin-top: 8px;
+
+      outline: none;
+
+      appearance: none;
+      background: var(--box-bg-color);
+      height: 56px;
+      font-size: 20px;
+      color: var(--search-input-color);
+      min-width: 0;
+      border: none;
+
+      box-sizing: border-box;
+
+      border-radius: 4px;
+    }
+
+    .searchInput.searchHasRes{
+      border-bottom: 1px solid #334155;
+      border-radius: 4px 4px 0 0;
+    }
+
+    // 搜索结果
+    .searchResult{
+      background: var(--box-bg-color);
+    }
+
+    // 最近
+    .recent{
+
+    }
+
+    // 结果列表
+    .sugList{
+      padding-top: 12px;
+      padding-bottom: 12px;
+
+      .item{
+        color: #d1d5db;
+        cursor: pointer;
+        padding: 8px 20px;
+
+        position: relative;
+      }
+      
+      .item:hover{
+        background: #0206173b;
+        color: white;
+      }
+   
+      .item.active{
+        color: white;
+        background-color: #0206173b;
+      }
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  #chrome-extension-zfy-search-content-view-root {
+    .searchBox {
+      padding: 16px;
+    }
+  }
+}
