@@ -1,30 +1,21 @@
+import { CloseOutlined } from "@ant-design/icons";
+import BlockList from "./BlockList";
 import { SugResultListItem } from "../hooks/useSugList";
+import Block from "./Block";
 
 export default function SugList(props: {
   list: SugResultListItem[];
   activeId?: string;
-  onClick?: (item:SugResultListItem) => void;
+  title?: any;
+  onClick?: (item: SugResultListItem) => void;
+  onDelete?: (e: any, item: SugResultListItem) => void;
+  showDeleteBtn?: boolean;
 }) {
-  const { list = [], activeId, onClick } = props;
-
-  if (!list?.length) return <></>;
+  if (!props.list?.length) return <></>;
 
   return (
-    <div className="sugList">
-      {list?.map((item, index) => {
-        const { label, path, id = "" } = item;
-        return (
-          <div
-            key={index}
-            className={`item ${activeId === id ? "active" : ""}`}
-            onClick={() => {
-              onClick?.(item);
-            }}
-          >
-            {label}
-          </div>
-        );
-      })}
-    </div>
+    <Block>
+      <BlockList {...props} />
+    </Block>
   );
 }

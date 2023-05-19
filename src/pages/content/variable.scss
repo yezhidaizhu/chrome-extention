@@ -1,0 +1,68 @@
+// 默认值
+#chrome-extension-zfy-search-content-view-root {
+  // 默认值
+  text-align: left;
+  font-size: 16px;
+
+  div {
+    box-sizing: border-box;
+  }
+}
+
+// 变量
+#chrome-extension-zfy-search-content-view-root {
+  .searchBox{
+    /** 白色主题 */
+    --search-input-color: rgb(18, 18, 18); // 输入框字颜色
+    --search-input-border-color: #fff; // 输入框边框颜色
+
+    --box-bg-color: rgba(255, 255, 255, 0.814); // 背景主颜色，包括输入框
+    --sugList-color: rgb(79, 79, 79); // 推荐列表字主颜色
+
+    --sugList-item-hover-color: rgb(0, 0, 0); // 推荐列表hover 后的颜色
+    --sugList-item-hover-bg-color: rgba(255,255,255,0.938); // 推荐列表hover 后的背景颜色
+
+    // antd Segmented 组件
+    --ant-segmented-color: #000000a6; // 字颜色
+    --ant-segmented-bg-color: white; // 背景颜色
+    --ant-segmented-selected-color: black; // 选中颜色
+    --ant-segmented-selected-bg-color: white; // 选中滑块背景颜色
+    --ant-segmented-thumb-bg-color: var(--ant-segmented-selected-bg-color); // 滑块背景色
+
+    &.dark{
+      --search-input-color: rgb(243, 243, 243); // 输入框字颜色
+      --search-input-border-color: #000; // 输入框边框颜色
+
+      --box-bg-color: rgb(15 23 42 / 92%); // 背景主颜色，包括输入框
+      --sugList-color: rgb(218, 218, 218); // 推荐列表字主颜色
+
+      --sugList-item-hover-color: rgb(254, 254, 254); // 推荐列表hover 后的颜色
+      --sugList-item-hover-bg-color: rgba(0, 0, 0, 0.938); // 推荐列表hover 后的背景颜色
+
+
+      // antd Segmented 组件
+      --ant-segmented-color: #ffffffa6; // 字颜色
+      --ant-segmented-bg-color: #000; // 背景颜色
+      --ant-segmented-selected-color: #fff; // 选中颜色
+      --ant-segmented-selected-bg-color: #000; // 选中滑块背景颜色
+      --ant-segmented-thumb-bg-color: var(--ant-segmented-selected-bg-color); // 滑块背景色
+    }
+
+    // 下面的结果区域
+    .block {
+      @extend .primaryBg;
+      margin-top: 8px;
+      border-radius: 4px;
+      color: var(--sugList-color);
+    }
+
+    // 背景主色调，半透明背景
+    .primaryBg {
+      background: var(--box-bg-color);
+      backdrop-filter: blur(4px);
+      filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
+        drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+    }
+  }
+}
+

@@ -1,24 +1,7 @@
-import { useKeyPress, useThrottleFn } from "ahooks";
+import { useThrottleFn } from "ahooks";
 import { useEffect, useMemo, useState } from "react";
 
-const tabList = [
-  {
-    label: "baidu",
-    value: "baidu",
-  },
-  {
-    label: "google",
-    value: "google",
-  },
-  {
-    label: "github",
-    value: "github",
-  },
-  {
-    label: "npm",
-    value: "npm",
-  },
-];
+const DefaultType_Key = "defaultSearchType";
 
 export default function useSearchType() {
   // 搜索类型
@@ -49,16 +32,19 @@ export default function useSearchType() {
   };
 
   // 默认搜索
-  const defaultTypes = useMemo(() => {
-    return searchTypes[0]?.value;
-  }, [searchTypes]);
-  const [curType, setCurType] = useState(defaultTypes); // 当前搜索类型
+  const [defaultType, setDefaultType] = useState("");
 
-  useEffect(() => {
-    if (searchTypes?.length) {
-      setCurType(searchTypes[0]?.value);
+  // 初始化默认类型
+  const initDefaultType = async (searchTypes = []) => {
+    const data = await chrome.storage.local.get(DefaultType_Key);
+    if (data[DefaultType_Key]) {
+      setDefaultType(data[DefaultType_Key]);
+    } else {
+      setDefaultType(searchTypes?.[0]?.value ?? "");
     }
-  }, [defaultTypes]);
+  };
+
+  const [curType, setCurType] = useState(defaultType); // 当前搜索类型
 
   // 下一个搜索类型
   const nextSearchType = (rightArrow = true) => {
@@ -66,13 +52,13 @@ export default function useSearchType() {
     if (rightArrow) {
       // 正向
       setCurType(
-        searchTypes[(index + 1) % searchTypes.length]?.value ?? defaultTypes
+        searchTypes[(index + 1) % searchTypes.length]?.value ?? defaultType
       );
     } else {
       // 反向
       setCurType(
         searchTypes[(index + searchTypes.length - 1) % searchTypes.length]
-          ?.value ?? defaultTypes
+          ?.value ?? defaultType
       );
     }
   };
@@ -85,9 +71,27 @@ export default function useSearchType() {
     { wait: 150 }
   );
 
+  // 获取搜索类型
   useEffect(() => {
     getSearchTypes();
   }, []);
+
+  // 设置默认类型
+  useEffect(() => {
+    initDefaultType();
+  }, [searchTypes]);
+
+  // 设置当前类型
+  useEffect(() => {
+    setCurType(defaultType);
+  }, [defaultType]);
+
+  // 切换搜索类型后，保存下来
+  useEffect(() => {
+    if (curType) {
+      chrome.storage.local.set({ [DefaultType_Key]: curType });
+    }
+  }, [curType]);
 
   return { curType, setCurType, searchTypes, getSearchPath, runNextType: run };
 }

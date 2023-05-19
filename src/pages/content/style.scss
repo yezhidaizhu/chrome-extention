@@ -1,121 +1,167 @@
+@import "./variable.scss";
+
 #chrome-extension-zfy-search-content-view-root {
-  --color-primer-canvas-backdrop: rgba(15, 23, 42, 0.8);
-
-  // 搜索模块底色(暗色)
-  // --box-bg-color: #1e293b;
-  // --search-input-color: rgb(226, 232, 240);
-
-
-  --search-input-color: rgb(18, 18, 18);
-  --box-bg-color: #fff;
-
-  // 默认值
-  text-align: left;
-  font-size: 16px;
-  
-  div {
-    box-sizing: border-box;
-  }
-
-  #backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    height: 100vh;
-    padding: 8px;
-
-    // backdrop-filter: blur(4px);
-    // background-color: var(--color-primer-canvas-backdrop);
-  }
-
-  #hidden {
-    display: none;
-  }
-
   .searchBox {
-    padding: 10vh;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+    position: fixed;
+    top: 10vh;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1000;
 
+    max-width: 758px;
+
+    // 搜索整个区域
     .searchBoxContent {
-      max-width: 758px;
-
       margin: auto;
       overflow: hidden;
-      padding: 8px;
+      padding: 16px;
       box-sizing: border-box;
     }
 
-    .searchInput {
-      display: block;
-      width: 100%;
-      padding: 0 20px;
-      margin-top: 8px;
-
-      outline: none;
-
-      appearance: none;
-      background: var(--box-bg-color);
-      height: 56px;
-      font-size: 20px;
-      color: var(--search-input-color);
-      min-width: 0;
-      border: none;
-
-      box-sizing: border-box;
-
-      border-radius: 4px;
-    }
-
-    .searchInput.searchHasRes{
-      border-bottom: 1px solid #334155;
-      border-radius: 4px 4px 0 0;
-    }
-
-    // 搜索结果
-    .searchResult{
-      background: var(--box-bg-color);
+    // 最上面部分，包括切换，设置
+    .top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     // 最近
-    .recent{
+    .recentDesc{
+      font-size: 12px;
+      padding-left: 16px;
+      font-weight: 600;
+      padding-bottom: 4px;
+    }
+  }
+}
 
+// 列表
+#chrome-extension-zfy-search-content-view-root {
+  .blockList {
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    .item {
+      cursor: pointer;
+      padding: 8px 12px;
+      margin: 0 8px;
+      border-radius: 4px;
+
+      display: flex;
+      justify-content: space-between;
+
+      .desc{
+        margin-top: 2px;
+        font-size: 12px;
+        opacity: 0.7;
+      }
     }
 
-    // 结果列表
-    .sugList{
-      padding-top: 12px;
-      padding-bottom: 12px;
+    .item:hover,
+    .item.active {
+      color: var(--sugList-item-hover-color);
+      background-color: var(--sugList-item-hover-bg-color);
+    }
 
-      .item{
-        color: #d1d5db;
-        cursor: pointer;
-        padding: 8px 20px;
+    // 删除按钮
+    .deleteBtn{
+      height: 24px;
+      width: 24px;
+      text-align: center;
+      border-radius: 4px; 
 
-        position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      &:hover{
+        color: #fff;
+        background: #ff004b;
       }
-      
-      .item:hover{
-        background: #0206173b;
-        color: white;
-      }
-   
-      .item.active{
-        color: white;
-        background-color: #0206173b;
+      &:active{
+        opacity: 0.95;
       }
     }
   }
 }
 
+// 输入框
+#chrome-extension-zfy-search-content-view-root {
+  // 输入框
+  .searchInput {
+    @extend .primaryBg;
+
+    display: block;
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 8px;
+
+    outline: none;
+
+    appearance: none;
+    height: 56px;
+    font-size: 18px;
+    color: var(--search-input-color);
+
+    border: 2px solid var(--search-input-border-color);
+    border-radius: 4px;
+  }
+}
+
+// antd 样式修改
+#chrome-extension-zfy-search-content-view-root {
+  .ant-segmented {
+    @extend .primaryBg;
+    color: var(--ant-segmented-color);
+    border: 2px solid var(--search-input-border-color);
+  }
+  .ant-segmented-item:hover{
+    color: var(--ant-segmented-selected-color);
+  }
+  .ant-segmented-item-selected{
+    color: var(--ant-segmented-selected-color);
+    background-color: var(--ant-segmented-selected-bg-color);
+    text-decoration: underline;
+  }
+  .ant-segmented-thumb{ // 滑块
+    background-color: var(--ant-segmented-thumb-bg-color);
+  }
+}
+
+
+// 设置
+#chrome-extension-zfy-search-content-view-root {
+  .settingIcon{
+    @extend .primaryBg;
+    color: var(--sugList-color);
+    align-self: flex-end;
+    margin: 0 4px;
+    border: 2px solid var(--search-input-border-color);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.3;
+
+    &:hover{
+      opacity: 1;
+    }
+    &:active{
+      opacity: 0.6;  
+    }
+  }
+
+}
+
 @media (max-width: 720px) {
   #chrome-extension-zfy-search-content-view-root {
     .searchBox {
-      padding: 16px;
+      top: 0px;
     }
   }
 }

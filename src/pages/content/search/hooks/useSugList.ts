@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { uid } from "../utils";
 import { useDebounceFn } from "ahooks";
-import { EventType } from "../type";
+import { EventType, SearchType } from "../type";
 
 export interface SugResultListItem {
   id: string;
   label: string;
   path: string;
+
+  desc?: string;
+  end?: string;
 }
 
 export default function useSugList({ curSugType = "" }) {
@@ -32,9 +34,21 @@ export default function useSugList({ curSugType = "" }) {
   };
 
   const handleMessage = (msg) => {
-    const { type, data } = msg || {};
+    const { type, data, sugType } = msg || {};
+
     if (type === EventType.ReplySug) {
-      setSugList(data);
+      if (sugType === SearchType.Npm) {
+        // npm
+        setSugList(
+          data.map((item) => ({
+            ...item,
+            desc: item.description,
+            end: item.version,
+          }))
+        );
+      } else {
+        setSugList(data);
+      }
     }
   };
 
