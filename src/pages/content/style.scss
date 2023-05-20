@@ -156,6 +156,30 @@
     }
   }
 
+  // 搜索排序item
+   .sortSearchTypeItem{
+    font-size: 16px;
+    color: var(--search-input-color);
+    padding: 0 16px;
+    width: 100%;
+  }
+}
+
+// 遮罩
+#chrome-extension-zfy-search-content-view-root {
+  .mask{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .mask.dark{
+    background-color: rgba(15, 23, 42, 0.8);
+  }
 }
 
 @media (max-width: 720px) {

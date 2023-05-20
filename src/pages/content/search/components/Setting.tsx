@@ -1,11 +1,11 @@
-import { Switch } from "antd";
+import { Radio, Switch } from "antd";
 import { useState } from "react";
 import BlockList, { BlockListItem } from "./BlockList";
 import Block from "./Block";
 
 type SettingProps = {
   setting: {
-    isDarkTheme?: boolean;
+    theme?: string;
     mask?: boolean;
   };
 
@@ -15,18 +15,26 @@ type SettingProps = {
 export default function Setting(props: SettingProps) {
   const { setting, onSettingChange } = props;
 
+  const onChange = (e) => {
+    console.log(e);
+  };
+
   const list: BlockListItem[] = [
     {
       label: "主题",
       end: (
-        <Switch
-          checkedChildren="暗"
-          unCheckedChildren="亮"
-          checked={setting?.isDarkTheme}
-          onChange={(ck) =>
-            onSettingChange({ field: "isDarkTheme", value: ck })
-          }
-        />
+        <Radio.Group
+          value={setting?.theme}
+          size="small"
+          buttonStyle="solid"
+          onChange={(event) => {
+            const value = event?.target?.value;
+            onSettingChange({ field: "theme", value: value });
+          }}
+        >
+          <Radio.Button value="light">月白</Radio.Button>
+          <Radio.Button value="dark">暗黑</Radio.Button>
+        </Radio.Group>
       ),
     },
     {

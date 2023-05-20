@@ -10,13 +10,16 @@ export default function useSetting() {
   };
 
   const [setting, setSetting] = useState({
-    isDarkTheme: false,
+    theme: "light",
     mask: false,
   });
 
   const onSettingChange = (data: { field: string; value: any }) => {
     const { field, value } = data;
-    setSetting((d) => ({ ...d, [field]: value }));
+    const newSetting = { ...setting, [field]: value };
+
+    setSetting(newSetting);
+    chrome.storage.local.set({ [SettingKey]: newSetting });
   };
 
   const initSetting = async () => {

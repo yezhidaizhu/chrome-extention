@@ -27,7 +27,7 @@ export default function Search(props: { closeSearch: () => void }) {
     curSugType: curType,
   });
 
-  const { pushHistory, rmHistory } = useSearchHistory();
+  const { pushHistory } = useSearchHistory();
 
   // 打开
   const { wopen } = useOpen();
@@ -144,66 +144,71 @@ export default function Search(props: { closeSearch: () => void }) {
   }, [curType]);
 
   return (
-    <div className={`searchBox ${setting?.isDarkTheme ? "dark" : ""}`}>
-      <div className="searchBoxContent">
-        <div className="top">
-          {/* 切换搜索 */}
-          <Segmented
-            value={curType}
-            options={searchTypes}
-            onChange={(v: any) => {
-              setCurType(v);
+    <>
+      {/* 遮罩 */}
+      {setting?.mask && <div className={`mask ${setting?.theme}`}></div>}
+
+      <div className={`searchBox ${setting?.theme}`}>
+        <div className="searchBoxContent">
+          <div className="top">
+            {/* 切换搜索 */}
+            <Segmented
+              value={curType}
+              options={searchTypes}
+              onChange={(v: any) => {
+                setCurType(v);
+              }}
+            />
+
+            {/* 设置按钮 */}
+            <div
+              className="settingIcon"
+              onClick={() => {
+                toggleOpenSetting();
+              }}
+            >
+              <SettingFilled />
+            </div>
+          </div>
+
+          {/* 输入 */}
+          <input
+            ref={searchInputRef}
+            className={`searchInput`}
+            value={searchValue}
+            placeholder={curType}
+            onChange={(e: any) => {
+              const value = e?.target?.value;
+              setsearchValue(value);
+              onSearchValueChange(value);
             }}
           />
 
-          {/* 设置按钮 */}
-          <div
-            className="settingIcon"
-            onClick={() => {
-              toggleOpenSetting();
+          {/* 最近 */}
+          <Recent
+            show={!suglist?.length}
+            curSearchType={curType}
+            onClick={(item) => {
+              handleOpenWithSearchValue(item?.label);
             }}
-          >
-            <SettingFilled />
-          </div>
+            onSel={setsearchValue}
+          />
+
+          {/* 建议 */}
+          <SugList
+            list={suglist}
+            activeId={activeId}
+            onClick={(item) => {
+              handleOpen(item?.path);
+            }}
+          />
+
+          {/* 设置 */}
+          {openSetting && (
+            <Setting setting={setting} onSettingChange={onSettingChange} />
+          )}
         </div>
-
-        {/* 输入 */}
-        <input
-          ref={searchInputRef}
-          className={`searchInput`}
-          value={searchValue}
-          placeholder={curType}
-          onChange={(e: any) => {
-            const value = e?.target?.value;
-            setsearchValue(value);
-            onSearchValueChange(value);
-          }}
-        />
-
-        {/* 最近 */}
-        <Recent
-          show={!suglist?.length}
-          curSearchType={curType}
-          onClick={(item) => {
-            handleOpenWithSearchValue(item?.label);
-          }}
-          onSel={setsearchValue}
-        />
-
-        {/* 建议 */}
-        <SugList
-          list={suglist}
-          activeId={activeId}
-          onClick={(item) => {
-            handleOpen(item?.path);
-          }}
-        />
-
-        {/* 设置 */}
-        {openSetting && (
-          <Setting setting={setting} onSettingChange={onSettingChange} />
-        )}
       </div>
-    </div>
+    </>
   );
 }
