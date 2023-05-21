@@ -20,8 +20,15 @@ export default function Search(props: { closeSearch: () => void }) {
   const { setting, onSettingChange, openSetting, toggleOpenSetting } =
     useSetting();
 
-  const { curType, searchTypes, setCurType, getSearchPath, runNextType } =
-    useSearchType();
+  const {
+    curType,
+    searchTypes,
+    setCurType,
+    getSearchPath,
+    runNextType,
+    orginSearchTypes,
+    setOrginSearchTypes,
+  } = useSearchType();
 
   const { suglist, onSearchValueChange, clearSugList } = useSugList({
     curSugType: curType,

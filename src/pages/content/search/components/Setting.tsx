@@ -2,6 +2,7 @@ import { Radio, Switch } from "antd";
 import { useState } from "react";
 import BlockList, { BlockListItem } from "./BlockList";
 import Block from "./Block";
+import { MenuOutlined } from "@ant-design/icons";
 
 type SettingProps = {
   setting: {
@@ -54,5 +55,19 @@ export default function Setting(props: SettingProps) {
     <Block>
       <BlockList list={list} />
     </Block>
+  );
+}
+
+function SearchTypeSortItem(props: { data: any }) {
+  return (
+    <div className="sortSearchTypeItem">
+      <div>
+        <MenuOutlined style={{ fontSize: "12px", marginRight: "6px" }} />
+        {props.data?.label}
+      </div>
+      <div>
+        <Switch checkedChildren="开" unCheckedChildren="关" />
+      </div>
+    </div>
   );
 }

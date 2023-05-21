@@ -22,7 +22,7 @@ export default function useSearchType() {
     const data: any = await chrome.storage.local.get("searchTypes");
     if (data?.searchTypes) {
       const types = data?.searchTypes ?? [];
-      setOrginSearchTypes(types);
+      setOrginSearchTypes(types?.map((item) => ({ ...item, id: item?.type })));
     }
   };
 
@@ -93,7 +93,15 @@ export default function useSearchType() {
     }
   }, [curType]);
 
-  return { curType, setCurType, searchTypes, getSearchPath, runNextType: run };
+  return {
+    curType,
+    setCurType,
+    searchTypes,
+    getSearchPath,
+    runNextType: run,
+    orginSearchTypes,
+    setOrginSearchTypes,
+  };
 }
 
 interface SearchType {
