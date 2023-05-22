@@ -9,7 +9,7 @@ const Config = {
   // 目前支持
   searchTypes: {
     [SearchType.Baidu]: {
-      label: "baidu", // 显示的名字
+      label: "Baidu", // 显示的名字
       // host: "https://www.baidu.com", // 域名
       sugUrl: "https://www.baidu.com/sugrec",
       // 预推荐请求参数
@@ -29,7 +29,7 @@ const Config = {
       searchPath: "https://www.baidu.com/s?wd=${keyword}", // 替换 ${keyword} 就为搜索的地址
     },
     [SearchType.Npm]: {
-      label: "npm", // 显示的名字
+      label: "Npm", // 显示的名字
       // host: "https://www.baidu.com", // 域名
       sugUrl: "https://www.npmjs.com/search/suggestions",
       // 预推荐请求参数
@@ -53,7 +53,7 @@ const Config = {
       searchPath: "https://www.google.com/search?q=${keyword}", // 替换 ${keyword} 就为搜索的地址
     },
     [SearchType.Github]: {
-      label: "github", // 显示的名字
+      label: "Github", // 显示的名字
       sugUrl: "",
       // 预推荐请求参数
       sugParams: {

@@ -2,6 +2,7 @@ import reloadOnUpdate from "virtual:reload-on-update-in-background-script";
 import { EventType } from "./type";
 import Config from "./config";
 import { sugFetchMap } from "./searchSuggest";
+import { initDefaultSearchSetting } from "./setting";
 
 reloadOnUpdate("pages/background");
 
@@ -30,4 +31,6 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   chrome.storage.local.set({ searchTypes });
+
+  initDefaultSearchSetting();
 });

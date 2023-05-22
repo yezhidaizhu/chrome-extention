@@ -41,7 +41,7 @@ export default function BlockList(props: {
             }}
           >
             {/* label */}
-            <div>
+            <div className="label">
               <div>{label}</div>
               <div className="desc">{desc}</div>
             </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const SettingKey = "generalSetting";
+const SettingKey = "searchGeneralSetting";
 
 export default function useSetting() {
   const [openSetting, setOpenSetting] = useState(false);
@@ -12,6 +12,7 @@ export default function useSetting() {
   const [setting, setSetting] = useState({
     theme: "light",
     mask: false,
+    searchTypes: [],
   });
 
   const onSettingChange = (data: { field: string; value: any }) => {
@@ -23,9 +24,9 @@ export default function useSetting() {
   };
 
   const initSetting = async () => {
-    const data = await chrome.storage.local.get(SettingKey);
-    if (data?.[SettingKey]) {
-      await setSetting((s) => ({ ...s, ...(data?.[SettingKey] ?? {}) }));
+    const _setting = await getDefaultSetting();
+    if (_setting) {
+      await setSetting((s) => ({ ...s, ...(_setting ?? {}) }));
     }
   };
 
@@ -34,4 +35,9 @@ export default function useSetting() {
   }, []);
 
   return { setting, onSettingChange, openSetting, toggleOpenSetting };
+}
+
+export async function getDefaultSetting() {
+  const data = await chrome.storage.local.get(SettingKey);
+  return data?.[SettingKey];
 }

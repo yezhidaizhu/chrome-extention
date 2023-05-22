@@ -1,28 +1,26 @@
 import { useThrottleFn } from "ahooks";
 import { useEffect, useMemo, useState } from "react";
+import { getDefaultSetting } from "./useSetting";
 
 const DefaultType_Key = "defaultSearchType";
 
 export default function useSearchType() {
   // 搜索类型
   const [orginSearchTypes, setOrginSearchTypes] = useState<SearchType[]>([]);
-  const searchTypes = useMemo<
-    {
-      label: string;
-      value: string;
-    }[]
-  >(() => {
-    return orginSearchTypes?.map((obj) => ({
-      label: obj.label,
-      value: obj.type,
-    }));
-  }, [orginSearchTypes]);
+  const [searchTypes, setSearchTypes] = useState([]);
 
   const getSearchTypes = async () => {
     const data: any = await chrome.storage.local.get("searchTypes");
     if (data?.searchTypes) {
       const types = data?.searchTypes ?? [];
       setOrginSearchTypes(types?.map((item) => ({ ...item, id: item?.type })));
+    }
+    const searchTypeSetting = await getDefaultSetting();
+    if (searchTypeSetting?.["searchTypes"]) {
+      const isEnableSearchTypes = searchTypeSetting?.["searchTypes"]?.filter(
+        (item) => !item?.disabled
+      );
+      setSearchTypes(isEnableSearchTypes);
     }
   };
 
@@ -35,10 +33,13 @@ export default function useSearchType() {
   const [defaultType, setDefaultType] = useState("");
 
   // 初始化默认类型
-  const initDefaultType = async (searchTypes = []) => {
+  const initDefaultType = async () => {
     const data = await chrome.storage.local.get(DefaultType_Key);
-    if (data[DefaultType_Key]) {
-      setDefaultType(data[DefaultType_Key]);
+    const dfType = data[DefaultType_Key];
+    console.log(data, dfType, searchTypes);
+
+    if (dfType && searchTypes?.find((item) => item.value == dfType)) {
+      setDefaultType(dfType);
     } else {
       setDefaultType(searchTypes?.[0]?.value ?? "");
     }
