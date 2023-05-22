@@ -33,6 +33,29 @@
       font-weight: 600;
       padding-bottom: 4px;
     }
+
+    // 推荐尾部
+    .sugListEnd{
+      display: flex;
+      align-items: center;
+      &>div:not(:last-child){
+        margin-right: 12px;
+      }
+
+      .linkItem{
+        @extend .flexCenterCenter;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        opacity: 0.6;
+        border: 2px solid transparent;
+        transition: all 0.1s;
+        &:hover{
+          opacity: 0.8;
+          border-color: var(--search-input-color);
+        }
+      }
+    }
   }
 }
 
@@ -140,15 +163,14 @@
 #chrome-extension-zfy-search-content-view-root {
   .settingIcon{
     @extend .primaryBg;
+    @extend .flexCenterCenter;
     color: var(--sugList-color);
     align-self: flex-end;
     margin: 0 4px;
     border: 2px solid var(--search-input-border-color);
     width: 24px;
     height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
     border-radius: 4px;
     cursor: pointer;
     opacity: 0.3;

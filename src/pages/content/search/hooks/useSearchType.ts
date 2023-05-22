@@ -36,7 +36,6 @@ export default function useSearchType() {
   const initDefaultType = async () => {
     const data = await chrome.storage.local.get(DefaultType_Key);
     const dfType = data[DefaultType_Key];
-    console.log(data, dfType, searchTypes);
 
     if (dfType && searchTypes?.find((item) => item.value == dfType)) {
       setDefaultType(dfType);

@@ -7,6 +7,12 @@
   div {
     box-sizing: border-box;
   }
+
+  .flexCenterCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 // 变量
